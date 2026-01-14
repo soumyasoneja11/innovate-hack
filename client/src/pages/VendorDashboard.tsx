@@ -457,7 +457,7 @@ useEffect(() => {
               <div className="flex items-center gap-2 text-sm">
                 <span>{isPremium ? '👑 Premium Analysis' : 'Basic Analysis'}</span>
                 <span className="w-1 h-1 bg-white/50 rounded-full"></span>
-                <span>Powered by ScrapSync AI</span>
+                <span>Powered by TrashIT AI</span>
               </div>
             </div>
             
