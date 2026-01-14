@@ -91,8 +91,10 @@ export default function IndustryDashboard() {
           <div className="flex items-center gap-4">
             <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-600 rounded-xl flex items-center justify-center">
-                  <span className="text-2xl text-white">🏭</span>
+                <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl flex items-center justify-center shadow-md">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
                 </div>
                 <div>
                   <div className="text-sm text-amber-700">Monthly Procurement</div>
@@ -107,17 +109,16 @@ export default function IndustryDashboard() {
         <div className="border-b border-gray-200">
           <nav className="flex gap-2">
             {[
-              { id: 'sourcing', label: 'Material Sourcing', icon: '🔍' },
-              { id: 'suppliers', label: 'Supplier Network', icon: '🤝' },
-              { id: 'sustainability', label: 'Sustainability', icon: '🌿' },
-              { id: 'analytics', label: 'Analytics', icon: '📊' }
+              { id: 'sourcing', label: 'Material Sourcing' },
+              { id: 'suppliers', label: 'Supplier Network' },
+              { id: 'sustainability', label: 'Sustainability' },
+              { id: 'analytics', label: 'Analytics' }
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`flex items-center gap-2 px-4 py-3 font-medium rounded-t-lg border-b-2 transition-all ${activeTab === tab.id ? 'border-amber-600 text-amber-700 bg-amber-50' : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'}`}
+                className={`px-6 py-3 font-medium rounded-t-lg border-b-2 transition-all ${activeTab === tab.id ? 'border-amber-600 text-amber-700 bg-amber-50' : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'}`}
               >
-                <span>{tab.icon}</span>
                 {tab.label}
               </button>
             ))}

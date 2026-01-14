@@ -10,12 +10,12 @@ interface WasteCategory {
 }
 
 const wasteCategories: WasteCategory[] = [
-  { id: 'metal', name: 'Metal Scrap', icon: '⚙️', description: 'Copper, Steel, Aluminum, Brass' },
-  { id: 'plastic', name: 'Plastic Waste', icon: '♻️', description: 'PET, HDPE, PVC, LDPE' },
-  { id: 'paper', name: 'Paper & Cardboard', icon: '📄', description: 'Corrugated, Office Paper, Newsprint' },
-  { id: 'ewaste', name: 'E-Waste', icon: '💻', description: 'Circuit Boards, Cables, Electronics' },
-  { id: 'hazardous', name: 'Hazardous Waste', icon: '⚠️', description: 'Chemicals, Batteries, Fluorescent' },
-  { id: 'organic', name: 'Organic Waste', icon: '🌱', description: 'Food Waste, Agricultural Residue' },
+  { id: 'metal', name: 'Metal Scrap', icon: 'MT', description: 'Copper, Steel, Aluminum, Brass' },
+  { id: 'plastic', name: 'Plastic Waste', icon: 'PL', description: 'PET, HDPE, PVC, LDPE' },
+  { id: 'paper', name: 'Paper & Cardboard', icon: 'PP', description: 'Corrugated, Office Paper, Newsprint' },
+  { id: 'ewaste', name: 'E-Waste', icon: 'EW', description: 'Circuit Boards, Cables, Electronics' },
+  { id: 'hazardous', name: 'Hazardous Waste', icon: 'HZ', description: 'Chemicals, Batteries, Fluorescent' },
+  { id: 'organic', name: 'Organic Waste', icon: 'OR', description: 'Food Waste, Agricultural Residue' },
 ];
 
 export default function SellerDashboard() {
@@ -171,9 +171,18 @@ export default function SellerDashboard() {
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`w-full flex items-center gap-3 p-3 rounded-lg border transition-all ${selectedCategory === category.id ? 'bg-emerald-50 border-emerald-300' : 'hover:bg-gray-50'}`}
+                  className={`w-full flex items-center gap-3 p-3 rounded-lg border transition-all ${selectedCategory === category.id ? 'bg-emerald-50 border-emerald-300 shadow-sm' : 'hover:bg-gray-50 border-gray-200'}`}
                 >
-                  <span className="text-2xl">{category.icon}</span>
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-xs font-bold text-white ${
+                    category.id === 'metal' ? 'bg-gradient-to-br from-gray-600 to-gray-700' :
+                    category.id === 'plastic' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600' :
+                    category.id === 'paper' ? 'bg-gradient-to-br from-blue-500 to-blue-600' :
+                    category.id === 'ewaste' ? 'bg-gradient-to-br from-purple-500 to-purple-600' :
+                    category.id === 'hazardous' ? 'bg-gradient-to-br from-red-500 to-red-600' :
+                    'bg-gradient-to-br from-green-500 to-green-600'
+                  }`}>
+                    {category.icon}
+                  </div>
                   <div className="flex-1 text-left">
                     <div className="font-medium text-gray-900">{category.name}</div>
                     <div className="text-sm text-gray-500">{category.description}</div>
@@ -195,8 +204,10 @@ export default function SellerDashboard() {
         <div className="lg:col-span-2">
           <div className="bg-white rounded-xl shadow-sm border p-6 sm:p-8">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center">
-                <span className="text-2xl text-white">+</span>
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-md">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" />
+                </svg>
               </div>
               <div>
                 <h2 className="text-xl font-bold text-gray-900">Create New Listing</h2>

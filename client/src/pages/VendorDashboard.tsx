@@ -177,14 +177,14 @@ useEffect(() => {
 
   const getCategoryIcon = (category: string) => {
     const icons: { [key: string]: string } = {
-      metal: '⚙️',
-      plastic: '♻️',
-      paper: '📄',
-      ewaste: '💻',
-      hazardous: '⚠️',
-      organic: '🌱'
+      metal: 'MT',
+      plastic: 'PL',
+      paper: 'PP',
+      ewaste: 'EW',
+      hazardous: 'HZ',
+      organic: 'OR'
     };
-    return icons[category] || '📦';
+    return icons[category] || 'GN';
   };
 
   const getPickupBadge = (window: string) => {
@@ -218,16 +218,18 @@ useEffect(() => {
               </button>
               <button
                 onClick={() => setIsPremium(true)}
-                className={`px-6 py-2 rounded-full font-medium transition-all ${isPremium ? 'text-gray-900' : 'text-gray-700 hover:text-gray-900'}`}
+                className={`px-6 py-2 rounded-full font-medium transition-all flex items-center gap-1 ${isPremium ? 'text-gray-900' : 'text-gray-700 hover:text-gray-900'}`}
               >
-                👑 Premium
+                <span className="text-xs font-bold">★</span> Premium
               </button>
             </div>
             
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
-                  <span className="text-2xl text-white">📊</span>
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-md">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
                 </div>
                 <div>
                   <div className="text-sm text-blue-700">Monthly Revenue</div>
@@ -242,16 +244,15 @@ useEffect(() => {
         <div className="border-b border-gray-200">
           <nav className="flex gap-2">
             {[
-              { id: 'marketplace', label: 'Marketplace', icon: '🏪' },
-              { id: 'my_bids', label: 'My Bids', icon: '📝' },
-              { id: 'analytics', label: 'Analytics', icon: '📊' }
+              { id: 'marketplace', label: 'Marketplace' },
+              { id: 'my_bids', label: 'My Bids' },
+              { id: 'analytics', label: 'Analytics' }
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`flex items-center gap-2 px-4 py-3 font-medium rounded-t-lg border-b-2 transition-all ${activeTab === tab.id ? 'border-blue-600 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'}`}
+                className={`px-6 py-3 font-medium rounded-t-lg border-b-2 transition-all ${activeTab === tab.id ? 'border-blue-600 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'}`}
               >
-                <span>{tab.icon}</span>
                 {tab.label}
               </button>
             ))}
@@ -355,9 +356,18 @@ useEffect(() => {
                   className="h-48 w-full object-cover"
                 />
                 <div className="absolute top-3 left-3">
-                  <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
-                    <span className="text-lg">{getCategoryIcon(item.category)}</span>
-                    <span className="text-sm font-medium">{item.category}</span>
+                  <div className="flex items-center gap-2 bg-white/95 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-sm border border-gray-100">
+                    <div className={`w-6 h-6 rounded flex items-center justify-center text-xs font-bold text-white ${
+                      item.category === 'metal' ? 'bg-gradient-to-br from-gray-600 to-gray-700' :
+                      item.category === 'plastic' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600' :
+                      item.category === 'paper' ? 'bg-gradient-to-br from-blue-500 to-blue-600' :
+                      item.category === 'ewaste' ? 'bg-gradient-to-br from-purple-500 to-purple-600' :
+                      item.category === 'hazardous' ? 'bg-gradient-to-br from-red-500 to-red-600' :
+                      'bg-gradient-to-br from-green-500 to-green-600'
+                    }`}>
+                      {getCategoryIcon(item.category)}
+                    </div>
+                    <span className="text-sm font-medium text-gray-700">{item.category}</span>
                   </div>
                 </div>
                 <div className="absolute top-3 right-3">
@@ -373,9 +383,20 @@ useEffect(() => {
                   <div>
                     <h3 className="font-bold text-lg text-gray-900 mb-1 line-clamp-1">{item.wasteType}</h3>
                     <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <span>🏢 {item.sellerName}</span>
+                      <span className="flex items-center gap-1">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        {item.sellerName}
+                      </span>
                       <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
-                      <span>📍 {item.location}</span>
+                      <span className="flex items-center gap-1">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        {item.location}
+                      </span>
                     </div>
                   </div>
                   <div className="text-right">
@@ -454,8 +475,11 @@ useEffect(() => {
                   </svg>
                 </button>
               </div>
-              <div className="flex items-center gap-2 text-sm">
-                <span>{isPremium ? '👑 Premium Analysis' : 'Basic Analysis'}</span>
+              <div className="flex items-center gap-2 text-sm text-white/90">
+                <span className="flex items-center gap-1">
+                  {isPremium && <span className="text-yellow-300">★</span>}
+                  {isPremium ? 'Premium Analysis' : 'Basic Analysis'}
+                </span>
                 <span className="w-1 h-1 bg-white/50 rounded-full"></span>
                 <span>Powered by TrashIT AI</span>
               </div>
