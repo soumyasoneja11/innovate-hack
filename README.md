@@ -117,7 +117,7 @@ FIREBASE_SERVICE_ACCOUNT_KEY=path_to_service_account. json
 GEMINI_API_KEY=your_google_ai_api_key
 ```
 
-## 📊 API Endpoints
+## API Endpoints
 
 ### Backend Server (`localhost:5000`)
 - `GET /api/listings` - Retrieve waste listings
@@ -131,7 +131,7 @@ GEMINI_API_KEY=your_google_ai_api_key
 - `GET /health` - AI service health check
 - `GET /docs` - Interactive API documentation
 
-## 🔧 Technology Stack
+## Technology Stack
 
 | Component | Technologies |
 |-----------|-------------|
@@ -143,7 +143,7 @@ GEMINI_API_KEY=your_google_ai_api_key
 | **Authentication** | Firebase Auth |
 | **Deployment** | Docker, Cloud Services |
 
-## 🌱 Environmental Impact
+## Environmental Impact
 
 TrashIT contributes to sustainability by:
 - **Reducing Waste**:  Connecting waste generators with processors
@@ -152,7 +152,7 @@ TrashIT contributes to sustainability by:
 - **Resource Recovery**: Maximizing material value extraction
 - **Carbon Footprint**: Optimized logistics and processing
 
-## 📈 Business Model
+## Business Model
 
 ### Revenue Streams
 1. **Transaction Fees**: Commission on successful trades
@@ -167,11 +167,11 @@ TrashIT contributes to sustainability by:
 - **Sustainability Focus**: Corporate ESG initiatives
 - **Digital Transformation**: Traditional industries going digital
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🏆 Hackathon Project
+## Hackathon Project
 
 **TrashIT** was developed for the **Innovate Hack 3.0** - demonstrating the potential of AI-powered solutions in sustainable waste management. 
 
