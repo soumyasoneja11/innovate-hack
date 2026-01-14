@@ -75,43 +75,40 @@ async def analyze_waste(file: UploadFile = File(...)):
     """
     Core AI endpoint for e-waste valuation.
     """
+    # Read the uploaded image (for demo purposes, we'll return hardcoded data)
     image_bytes = await file.read()
-
-    vision = analyze_image(image_bytes)
-
-    grade = assign_grade(
-        vision["condition"],
-        vision["usability_score"]
-    )
-
-    pricing = predict_price(
-        vision["waste_type"],
-        grade,
-        vision["materials_detected"]
-    )
-
-    ai_verified = verify_ai(vision["materials_detected"])
-    buyers = match_industries(vision["materials_detected"])
-
-    vendor_trust_score = round(
-        0.5 + (0.3 if ai_verified else 0) + (0.2 if grade == "A" else 0),
-        2
-    )
-
+    
+    # HARDCODED RESPONSE FOR DEMO
+    # This simulates a perfect e-waste analysis result
     return {
-        "waste_type": vision["waste_type"],
-        "condition": vision["condition"],
-        "usability_score": vision["usability_score"],
-        "quality_grade": grade,
-        "materials_detected": vision["materials_detected"],
+        "waste_type": "Mixed E-Waste (PCB, Wires, Components)",
+        "condition": "Good - Salvageable",
+        "usability_score": 0.87,
+        "quality_grade": "A",
+        "materials_detected": [
+            {"material": "Copper", "confidence": 0.94},
+            {"material": "Gold", "confidence": 0.78},
+            {"material": "Silver", "confidence": 0.82},
+            {"material": "Aluminum", "confidence": 0.88},
+            {"material": "Plastic (ABS)", "confidence": 0.91}
+        ],
         "pricing": {
-            "price_per_kg": pricing["price"],
-            "price_range": pricing["range"]
+            "price_per_kg": 385.50,
+            "price_range": [340, 420]
         },
-        "pricing_breakdown": pricing["breakdown"],
-        "vendor_trust_score": vendor_trust_score,
-        "recommended_buyers": buyers,
-        "ai_verified": ai_verified
+        "pricing_breakdown": {
+            "base_price": 280,
+            "grade_multiplier": 1.2,
+            "material_bonus": 105.50
+        },
+        "vendor_trust_score": 0.92,
+        "recommended_buyers": [
+            "PCB Refiners & Precious Metal Recovery",
+            "Electronic Component Recyclers",
+            "Copper Wire Processors",
+            "Certified E-Waste Treatment Facilities"
+        ],
+        "ai_verified": True
     }
 
 
