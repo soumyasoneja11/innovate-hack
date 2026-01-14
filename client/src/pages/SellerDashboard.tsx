@@ -18,7 +18,11 @@ const wasteCategories: WasteCategory[] = [
   { id: 'organic', name: 'Organic Waste', icon: 'OR', description: 'Food Waste, Agricultural Residue' },
 ];
 
-export default function SellerDashboard() {
+interface SellerDashboardProps {
+  onBackToHome?: () => void;
+}
+
+export default function SellerDashboard({ onBackToHome }: SellerDashboardProps = {}) {
   const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [uploadProgress, setUploadProgress] = useState<number>(0);
@@ -108,6 +112,17 @@ export default function SellerDashboard() {
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+      {/* Back Button */}
+      {onBackToHome && (
+        <button
+          onClick={onBackToHome}
+          className="mb-6 flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700 font-medium shadow-sm"
+        >
+          <span className="text-xl">←</span>
+          <span>Back to Home</span>
+        </button>
+      )}
+      
       {/* Dashboard Header */}
       <div className="mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">

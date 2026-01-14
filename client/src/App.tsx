@@ -164,9 +164,9 @@ function App() {
         </div>
       </nav>
       
-      {userRole === 'seller' ? <SellerDashboard /> : 
-       userRole === 'vendor' ? <VendorDashboard /> : 
-       <IndustryDashboard />}
+      {userRole === 'seller' ? <SellerDashboard onBackToHome={() => setUserRole(null)} /> : 
+       userRole === 'vendor' ? <VendorDashboard onBackToHome={() => setUserRole(null)} /> : 
+       <IndustryDashboard onBackToHome={() => setUserRole(null)} />}
     </div>
   );
 }
