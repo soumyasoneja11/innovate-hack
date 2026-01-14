@@ -19,7 +19,11 @@ interface Supplier {
   materials: string[];
 }
 
-export default function IndustryDashboard() {
+interface IndustryDashboardProps {
+  onBackToHome?: () => void;
+}
+
+export default function IndustryDashboard({ onBackToHome }: IndustryDashboardProps = {}) {
   const [activeTab, setActiveTab] = useState<'sourcing' | 'suppliers' | 'sustainability'>('sourcing');
   const materialRequests : MaterialRequest[] = ([
     {
@@ -80,6 +84,17 @@ export default function IndustryDashboard() {
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+      {/* Back Button */}
+      {onBackToHome && (
+        <button
+          onClick={onBackToHome}
+          className="mb-6 flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700 font-medium shadow-sm"
+        >
+          <span className="text-xl">←</span>
+          <span>Back to Home</span>
+        </button>
+      )}
+      
       {/* Dashboard Header */}
       <div className="mb-8">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">

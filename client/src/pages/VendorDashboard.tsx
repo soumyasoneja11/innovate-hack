@@ -22,7 +22,11 @@ interface Filter {
   sortBy: string;
 }
 
-export default function VendorDashboard() {
+interface VendorDashboardProps {
+  onBackToHome?: () => void;
+}
+
+export default function VendorDashboard({ onBackToHome }: VendorDashboardProps = {}) {
   const [listings, setListings] = useState<Listing[]>([]);
   const [isPremium, setIsPremium] = useState(false);
   const [scanResult, setScanResult] = useState<any>(null);
@@ -199,6 +203,17 @@ useEffect(() => {
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+      {/* Back Button */}
+      {onBackToHome && (
+        <button
+          onClick={onBackToHome}
+          className="mb-6 flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700 font-medium shadow-sm"
+        >
+          <span className="text-xl">←</span>
+          <span>Back to Home</span>
+        </button>
+      )}
+      
       {/* Dashboard Header */}
       <div className="mb-8">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
@@ -209,16 +224,18 @@ useEffect(() => {
           
           {/* Premium Toggle */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div className={`p-1 rounded-full flex ${isPremium ? 'bg-gradient-to-r from-yellow-400 to-amber-500' : 'bg-gray-200'}`}>
+            <div className={`p-1 flex ${isPremium ? 'bg-gradient-to-r from-yellow-400 to-amber-500' : 'bg-gray-200'}`} style={{ borderRadius: '26px' }}>
               <button
                 onClick={() => setIsPremium(false)}
-                className={`px-6 py-2 rounded-full font-medium transition-all ${!isPremium ? 'bg-white shadow' : 'text-gray-700 hover:text-gray-900'}`}
+                className={`px-6 py-2 font-medium transition-all ${!isPremium ? 'bg-white text-gray-900' : 'text-gray-800 hover:text-gray-900'}`}
+                style={{ borderRadius: '26px' }}
               >
                 Free Plan
               </button>
               <button
                 onClick={() => setIsPremium(true)}
-                className={`px-6 py-2 rounded-full font-medium transition-all ${isPremium ? 'text-gray-900' : 'text-gray-700 hover:text-gray-900'}`}
+                className={`px-6 py-2 font-medium transition-all ${isPremium ? 'bg-white text-gray-900' : 'text-gray-800 hover:text-gray-900'}`}
+                style={{ borderRadius: '26px' }}
               >
                 👑 Premium
               </button>
