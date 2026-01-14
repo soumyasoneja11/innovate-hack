@@ -1,5 +1,4 @@
 # TrashIT - AI-Powered E-Waste Intelligence Platform 
-("Revolutionizing the Circular Economy with AI-Driven Waste Intelligence”)
 **TrashIT** is a comprehensive B2B marketplace that revolutionizes e-waste management by connecting waste sellers, collection vendors, and processing industries through AI-powered valuation and transparent pricing. 
 
 ## Overview
