@@ -16,7 +16,7 @@ function App() {
                 <span className="text-2xl font-bold text-white">♻</span>
               </div>
               <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-700 to-teal-800 bg-clip-text text-transparent">
-                ScrapSync
+                TrashIT
               </h1>
             </div>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -124,7 +124,7 @@ function App() {
                 <span className="text-lg font-bold text-white">♻</span>
               </div>
               <span className="font-bold text-xl bg-gradient-to-r from-emerald-700 to-teal-800 bg-clip-text text-transparent">
-                ScrapSync
+                TrashIT
               </span>
               <div className="ml-4 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-sm font-medium">
                 {userRole === 'seller' ? 'Corporate Dashboard' : 
