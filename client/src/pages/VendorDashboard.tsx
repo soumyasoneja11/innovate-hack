@@ -31,6 +31,7 @@ export default function VendorDashboard({ onBackToHome }: VendorDashboardProps =
   const [isPremium, setIsPremium] = useState(false);
   const [scanResult, setScanResult] = useState<any>(null);
   const [scanning, setScanning] = useState(false);
+  const [currentScannedItem, setCurrentScannedItem] = useState<Listing | null>(null);
   const [filters, setFilters] = useState<Filter>({
     category: 'all',
     location: 'all',
@@ -102,7 +103,7 @@ useEffect(() => {
   const fetchListings = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/listings?region=${filters.location !== 'all' ? filters.location : 'Noida'}&tier=${isPremium ? 'premium' : 'free'}`
+        `http://localhost:5001/api/listings?region=${filters.location !== 'all' ? filters.location : 'Noida'}&tier=${isPremium ? 'premium' : 'free'}`
       );
       
       if (!response.ok) {
@@ -152,31 +153,80 @@ useEffect(() => {
   fetchListings();
 }, [isPremium, filters]);
 
-  const handleScan = async () => {
+  const handleScan = async (listing: Listing) => {
     setScanning(true);
     setScanResult("scanning");
+    setCurrentScannedItem(listing);
     
-    setTimeout(() => {
+    try {
+      // Fetch the image as a blob
+      const imageResponse = await fetch(listing.imageUrl);
+      const imageBlob = await imageResponse.blob();
+      
+      // Create FormData and append the image
+      const formData = new FormData();
+      formData.append('file', imageBlob, 'waste-image.jpg');
+      
+      // Call the AI backend
+      const response = await fetch('http://localhost:8000/analyze-waste', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        throw new Error('AI analysis failed');
+      }
+      
+      const aiResult = await response.json();
+      
+      // Transform AI response to match our UI format
       setScanResult({
-        wasteType: "Copper Wire",
+        wasteType: aiResult.waste_type,
+        confidence: `${Math.round(aiResult.vendor_trust_score * 100)}%`,
+        priceRange: { 
+          min: Math.round(aiResult.pricing.price_range[0]), 
+          max: Math.round(aiResult.pricing.price_range[1]) 
+        },
+        usability: isPremium 
+          ? `${aiResult.condition.charAt(0).toUpperCase() + aiResult.condition.slice(1)} condition with ${Math.round(aiResult.usability_score * 100)}% usability score. Grade ${aiResult.quality_grade} quality.`
+          : `${aiResult.condition.charAt(0).toUpperCase() + aiResult.condition.slice(1)} condition with estimated ${Math.round(aiResult.usability_score * 100)}% usability.`,
+        composition: isPremium ? aiResult.materials_detected.reduce((acc: any, mat: any) => {
+          acc[mat.material] = `${Math.round(mat.confidence * 100)}%`;
+          return acc;
+        }, {}) : undefined,
+        recommendations: isPremium ? [
+          `Best fit for: ${aiResult.recommended_buyers.join(', ')}`,
+          `Quality Grade: ${aiResult.quality_grade}`,
+          `AI Verified: ${aiResult.ai_verified ? 'Yes' : 'No'}`,
+          `Trust Score: ${Math.round(aiResult.vendor_trust_score * 100)}%`
+        ] : undefined
+      });
+      
+    } catch (error) {
+      console.error('AI scan failed:', error);
+      
+      // Fallback to mock data if AI fails
+      setScanResult({
+        wasteType: listing.wasteType,
         confidence: isPremium ? "98%" : "85%",
         priceRange: { min: isPremium ? 42 : 38, max: isPremium ? 58 : 52 },
         usability: isPremium 
-          ? "High-grade copper suitable for electrical applications. 95% purity detected."
-          : "Good quality copper wire with estimated 90% purity.",
+          ? "High-grade material suitable for industrial applications. High purity detected."
+          : "Good quality material with estimated high purity.",
         composition: isPremium ? {
-          copper: "92%",
-          insulation: "8%",
+          primary: "92%",
+          secondary: "8%",
           impurities: "<1%"
         } : undefined,
         recommendations: isPremium ? [
-          "Best fit for: Electrical component manufacturers",
-          "Processing required: Insulation stripping",
+          "Best fit for: Industrial recycling companies",
+          "Processing required: Standard sorting",
           "Market demand: High"
         ] : undefined
       });
+    } finally {
       setScanning(false);
-    }, 2000);
+    }
   };
 
   const getCategoryIcon = (category: string) => {
@@ -436,7 +486,7 @@ useEffect(() => {
                 {/* Action Buttons */}
                 <div className="space-y-3">
                   <button 
-                    onClick={() => handleScan()}
+                    onClick={() => handleScan(item)}
                     disabled={scanning}
                     className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50 transition-all duration-300 flex items-center justify-center gap-2"
                   >

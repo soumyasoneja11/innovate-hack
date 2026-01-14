@@ -68,7 +68,7 @@ export default function SellerDashboard({ onBackToHome }: SellerDashboardProps =
       setUploadProgress(100);
 
       // 2. Send to Backend
-      await fetch('http://localhost:5000/api/listings', {
+      await fetch('http://localhost:5001/api/listings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

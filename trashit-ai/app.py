@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
 from ai_engine.vision import analyze_image
 from ai_engine.grading import assign_grade
 from ai_engine.pricing import predict_price
@@ -21,6 +22,15 @@ app = FastAPI(
 Built to enable **transparent, sustainable, and fair e-waste trading**.
 """,
     version="1.0.0"
+)
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://localhost:3000"],  # React dev server
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.post(
